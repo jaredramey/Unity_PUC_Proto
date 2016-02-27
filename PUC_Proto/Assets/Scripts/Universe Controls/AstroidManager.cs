@@ -3,7 +3,8 @@ using System.Collections;
 
 public class AstroidManager : MonoBehaviour
 {
-
+    [SerializeField]
+    public float astroidTimer = 0;
     [SerializeField]
     public GameObject astroid;
     [SerializeField]
@@ -13,23 +14,29 @@ public class AstroidManager : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-
+        InvokeRepeating("SpawnMeteor", astroidTimer, astroidTimer);
     }
 
     // Update is called once per frame
     void Update()
     {
-
-    }
-
-    void FixedUpdate()
-    {
-        SpawnMeteor();
+        
     }
 
     void SpawnMeteor()
     {
-        spawnPoint = new Vector3(Random.Range(800, 900), 0, Random.Range(800, 900));
+        float randX = Random.Range(-900, 900);
+        float randZ = Random.Range(-900, 900);
+
+        while((randX > -800 && randX < 800) && (randZ > -800 && randZ < 800) )
+        {
+            randX = Random.Range(-900, 900);
+            randZ = Random.Range(-900, 900);
+        }
+
+        Debug.Log(randX + "   " + randZ);
+
+        spawnPoint = new Vector3(randX, 0, randZ);
         Instantiate(astroid, spawnPoint, Quaternion.identity);
     }
 }
